@@ -1,5 +1,5 @@
 # misc
 *.iml
-.idea/workspace.xml
 *.xml
 .DS_Store
+.idea
