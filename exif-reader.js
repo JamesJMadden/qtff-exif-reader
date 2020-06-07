@@ -249,7 +249,8 @@ const inspectMovieAtom = buffer => {
 					chunkOffsetData = SampleTable.chunkOffsetAtom,
 					sampleSizeData = SampleTable.sampleChunkSizeAtom,
 					sampleToChunkData = SampleTable.sampleToChunkAtom,
-					sampleDescriptionData = SampleTable.sampleDescriptionAtom;
+					sampleDescriptionData = SampleTable.sampleDescriptionAtom,
+					timeToSampleData = SampleTable.timeToSampleAtom;
 
 				const chunkOffsets = chunkOffsetData.chunkOffsetTable,
 					sampleSizes = sampleSizeData.sampleSizeTable,
@@ -265,7 +266,7 @@ const inspectMovieAtom = buffer => {
 
 				console.log( "CHUNK / SAMPLE DATA FOR: " + trackType, handlerReferenceData );
 
-				console.log( "SampleTable", { chunkOffsetData, sampleSizeData, sampleToChunkData, sampleDescriptionData, Track } );
+				console.log( "SampleTable", { chunkOffsetData, sampleSizeData, sampleToChunkData, sampleDescriptionData, timeToSampleData, Track } );
 			}
 		} );
 	} );
