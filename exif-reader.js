@@ -253,7 +253,8 @@ const inspectMovieAtom = buffer => {
 					sampleToChunkData: SampleTable.sampleToChunkAtom,
 					sampleDescriptionData: SampleTable.sampleDescriptionAtom,
 					timeToSampleData: SampleTable.timeToSampleAtom,
-					compositionOffsetData: SampleTable.compositionOffsetAtom
+					compositionOffsetData: SampleTable.compositionOffsetAtom,
+					compositionShiftLeastGreatestAtom: SampleTable.compositionShiftLeastGreatestAtom
 				};
 
 				const chunkOffsets = data.chunkOffsetData.chunkOffsetTable,
