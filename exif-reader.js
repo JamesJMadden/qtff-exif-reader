@@ -2,6 +2,7 @@
 
 import SampleTableAtom from './lib/sample-table.js';
 import TrackAtom from './lib/track.js';
+import { numToHex } from './lib/utils.js';
 
 // DataView.prototype.setUint24 = function(pos, val) {
 // 	this.setUint16( pos, val >> 8 );
@@ -19,61 +20,6 @@ DataView.prototype.getInt24 = function(pos) {
 
 DataView.prototype.getInt48 = function(pos) {
 	return (this.getInt32(pos) << 16) + this.getInt16(pos + 4);
-};
-
-
-/**
- *
- * @function numToHex
- *
- * @description Helper function to convert an integer to its HEX equivalent
- *
- * @param {Number} number
- * @return {String}
- ================================================================================================ */
-window.numToHex = number => {
-	if ( number < 0 ) number = 0xFFFFFFFF + number + 1;
-
-	return number.toString( 16 ).toUpperCase();
-};
-
-
-/**
- *
- * @function stringToHex
- *
- * @description Helper function to convert a string to its HEX equivalent
- *
- * @param {String} string
- * @return {String}
- ================================================================================================ */
-window.stringToHex = string => {
-
-	return [ ...string ].map( ( a ) => a.charCodeAt( 0 ).toString( 16 ) ).join( '' );
-};
-
-
-/**
- *
- * @function hexToAscii
- *
- * @description Helper function to convert a hex to ASCII characters
- *
- * @param {String} str1
- * @return {String}
- ================================================================================================ */
-window.hexToAscii = str1 => {
-
-	if ( str1 === '0' ) return null;
-
-	const hex  = str1.toString();
-
-	let str = '';
-
-	for ( let n = 0; n < hex.length; n += 2 )
-		str += String.fromCharCode( parseInt( hex.substr( n, 2 ), 16 ) );
-
-	return str;
 };
 
 

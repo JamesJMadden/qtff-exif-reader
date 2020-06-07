@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="514a3a6a-5ef2-4720-94c5-baed498291d1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exif-reader.js" beforeDir="false" afterPath="$PROJECT_DIR$/exif-reader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/atom.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/atom.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/sample-table.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/sample-table.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/track.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/track.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,8 +24,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/exif-reader.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="620">
-              <caret line="247" column="67" lean-forward="true" selection-start-line="247" selection-start-column="67" selection-end-line="247" selection-end-column="67" />
+            <state>
+              <caret selection-end-line="1" />
               <folding>
                 <element signature="e#15#67#0" expanded="true" />
               </folding>
@@ -29,31 +34,43 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/utils.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/track.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="60" column="27" lean-forward="true" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="27" />
+            <state relative-caret-position="17">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#108#137#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/sample-table.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/sample-table.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="31" lean-forward="true" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/atom.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="34" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
@@ -79,11 +96,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>readTrackHeaderAtomData</find>
-      <find>version:</find>
-      <find>numToHex</find>
-      <find>sampleTab</find>
-      <find>Track</find>
       <find>getInt24</find>
       <find>SampleTableAtom</find>
       <find>buffer</find>
@@ -108,6 +120,11 @@
       <find>tableDataSize</find>
       <find>sampleToChunk</find>
       <find>sync</find>
+      <find>getMatrix</find>
+      <find>getEXIFData</find>
+      <find>hexToAscii</find>
+      <find>stringToHex</find>
+      <find>numToHex</find>
       <find>shadow</find>
     </findStrings>
     <replaceStrings>
@@ -126,10 +143,11 @@
         <option value="$PROJECT_DIR$/tests/index.html" />
         <option value="$PROJECT_DIR$/lib/track-header.js" />
         <option value="$PROJECT_DIR$/lib/media.js" />
-        <option value="$PROJECT_DIR$/lib/atom.js" />
-        <option value="$PROJECT_DIR$/lib/track.js" />
         <option value="$PROJECT_DIR$/exif-reader.js" />
+        <option value="$PROJECT_DIR$/lib/utils.js" />
+        <option value="$PROJECT_DIR$/lib/track.js" />
         <option value="$PROJECT_DIR$/lib/sample-table.js" />
+        <option value="$PROJECT_DIR$/lib/atom.js" />
       </list>
     </option>
   </component>
@@ -224,12 +242,12 @@
       <workItem from="1590550582439" duration="22637000" />
       <workItem from="1591295350812" duration="6913000" />
       <workItem from="1591446877271" duration="1799000" />
-      <workItem from="1591512855356" duration="11847000" />
+      <workItem from="1591512855356" duration="13079000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63843000" />
+    <option name="totallyTimeSpent" value="65075000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1920" height="1055" extended-state="6" />
@@ -274,37 +292,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/atom.js">
+    <entry file="file://$PROJECT_DIR$/lib/sample-table.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="34" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/track.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="60" column="27" lean-forward="true" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="27" />
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#108#137#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/exif-reader.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="247" column="67" lean-forward="true" selection-start-line="247" selection-start-column="67" selection-end-line="247" selection-end-column="67" />
+        <state>
+          <caret selection-end-line="1" />
           <folding>
             <element signature="e#15#67#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/sample-table.js">
+    <entry file="file://$PROJECT_DIR$/lib/atom.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="31" lean-forward="true" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
