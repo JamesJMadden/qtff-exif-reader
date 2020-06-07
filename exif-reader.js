@@ -245,16 +245,20 @@ const inspectMovieAtom = buffer => {
 
 			if ( trackType === 'vide' ) {
 
-				const SampleTable = new SampleTableAtom( 'stbl', Track.dataView.buffer ),
-					chunkOffsetData = SampleTable.chunkOffsetAtom,
-					sampleSizeData = SampleTable.sampleChunkSizeAtom,
-					sampleToChunkData = SampleTable.sampleToChunkAtom,
-					sampleDescriptionData = SampleTable.sampleDescriptionAtom,
-					timeToSampleData = SampleTable.timeToSampleAtom;
+				const SampleTable = new SampleTableAtom( 'stbl', Track.dataView.buffer );
 
-				const chunkOffsets = chunkOffsetData.chunkOffsetTable,
-					sampleSizes = sampleSizeData.sampleSizeTable,
-					chunkSamlpes = sampleToChunkData.sampleToChunkTable;
+				const data = {
+					chunkOffsetData: SampleTable.chunkOffsetAtom,
+					sampleSizeData: SampleTable.sampleChunkSizeAtom,
+					sampleToChunkData: SampleTable.sampleToChunkAtom,
+					sampleDescriptionData: SampleTable.sampleDescriptionAtom,
+					timeToSampleData: SampleTable.timeToSampleAtom,
+					compositionOffsetData: SampleTable.compositionOffsetAtom
+				};
+
+				const chunkOffsets = data.chunkOffsetData.chunkOffsetTable,
+					sampleSizes = data.sampleSizeData.sampleSizeTable,
+					chunkSamlpes = data.sampleToChunkData.sampleToChunkTable;
 
 				// GO BACK THROUGH ARRAY OF CHUNK OFFSETS
 				chunkOffsets.reverse().forEach( chunkOffset => {
@@ -266,7 +270,7 @@ const inspectMovieAtom = buffer => {
 
 				console.log( "CHUNK / SAMPLE DATA FOR: " + trackType, handlerReferenceData );
 
-				console.log( "SampleTable", { chunkOffsetData, sampleSizeData, sampleToChunkData, sampleDescriptionData, timeToSampleData, Track } );
+				console.log( "SampleTable", { data, Track } );
 			}
 		} );
 	} );

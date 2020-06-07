@@ -20,8 +20,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/exif-reader.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="501">
-              <caret line="268" column="139" selection-start-line="268" selection-start-column="139" selection-end-line="268" selection-end-column="139" />
+            <state relative-caret-position="569">
+              <caret line="272" column="50" selection-start-line="272" selection-start-column="46" selection-end-line="272" selection-end-column="50" />
               <folding>
                 <element signature="e#15#67#0" expanded="true" />
               </folding>
@@ -44,8 +44,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/sample-table.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="535">
-              <caret line="199" column="34" selection-start-line="199" selection-start-column="34" selection-end-line="199" selection-end-column="34" />
+            <state relative-caret-position="144">
+              <caret line="218" lean-forward="true" selection-start-line="218" selection-end-line="218" />
             </state>
           </provider>
         </entry>
@@ -129,8 +129,8 @@
         <option value="$PROJECT_DIR$/lib/media.js" />
         <option value="$PROJECT_DIR$/lib/track.js" />
         <option value="$PROJECT_DIR$/lib/atom.js" />
-        <option value="$PROJECT_DIR$/exif-reader.js" />
         <option value="$PROJECT_DIR$/lib/sample-table.js" />
+        <option value="$PROJECT_DIR$/exif-reader.js" />
       </list>
     </option>
   </component>
@@ -225,12 +225,12 @@
       <workItem from="1590550582439" duration="22637000" />
       <workItem from="1591295350812" duration="6913000" />
       <workItem from="1591446877271" duration="1799000" />
-      <workItem from="1591512855356" duration="5038000" />
+      <workItem from="1591512855356" duration="5314000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57034000" />
+    <option name="totallyTimeSpent" value="57310000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1920" height="1055" extended-state="6" />
@@ -294,8 +294,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/exif-reader.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="501">
-          <caret line="268" column="139" selection-start-line="268" selection-start-column="139" selection-end-line="268" selection-end-column="139" />
+        <state relative-caret-position="569">
+          <caret line="272" column="50" selection-start-line="272" selection-start-column="46" selection-end-line="272" selection-end-column="50" />
           <folding>
             <element signature="e#15#67#0" expanded="true" />
           </folding>
@@ -304,8 +304,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/sample-table.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="199" column="34" selection-start-line="199" selection-start-column="34" selection-end-line="199" selection-end-column="34" />
+        <state relative-caret-position="144">
+          <caret line="218" lean-forward="true" selection-start-line="218" selection-end-line="218" />
         </state>
       </provider>
     </entry>
