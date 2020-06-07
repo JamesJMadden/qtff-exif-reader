@@ -1,5 +1,26 @@
 'use strict';
 
+import SampleTableAtom from './lib/sample-table.js';
+import TrackAtom from './lib/track.js';
+
+// DataView.prototype.setUint24 = function(pos, val) {
+// 	this.setUint16( pos, val >> 8 );
+// 	this.setUint8(pos + 2, val & 0xff); // this "magic number" masks off the first 16 bits
+// };
+
+DataView.prototype.getInt24 = function(pos) {
+	return (this.getInt16(pos) << 8) + this.getInt8(pos + 2);
+};
+
+// DataView.prototype.setUint24 = function(pos, val) {
+// 	this.getInt32( pos, val >> 16 );
+// 	this.getInt16(pos + 4, val & 0xffff); // this "magic number" masks off the first 32 bits
+// };
+
+DataView.prototype.getInt48 = function(pos) {
+	return (this.getInt32(pos) << 16) + this.getInt16(pos + 4);
+};
+
 
 /**
  *
@@ -7,14 +28,53 @@
  *
  * @description Helper function to convert an integer to its HEX equivalent
  *
- * @param number
- * @return {string}
+ * @param {Number} number
+ * @return {String}
  ================================================================================================ */
-function numToHex( number ) {
+window.numToHex = number => {
 	if ( number < 0 ) number = 0xFFFFFFFF + number + 1;
 
 	return number.toString( 16 ).toUpperCase();
-}
+};
+
+
+/**
+ *
+ * @function stringToHex
+ *
+ * @description Helper function to convert a string to its HEX equivalent
+ *
+ * @param {String} string
+ * @return {String}
+ ================================================================================================ */
+window.stringToHex = string => {
+
+	return [ ...string ].map( ( a ) => a.charCodeAt( 0 ).toString( 16 ) ).join( '' );
+};
+
+
+/**
+ *
+ * @function hexToAscii
+ *
+ * @description Helper function to convert a hex to ASCII characters
+ *
+ * @param {String} str1
+ * @return {String}
+ ================================================================================================ */
+window.hexToAscii = str1 => {
+
+	if ( str1 === '0' ) return null;
+
+	const hex  = str1.toString();
+
+	let str = '';
+
+	for ( let n = 0; n < hex.length; n += 2 )
+		str += String.fromCharCode( parseInt( hex.substr( n, 2 ), 16 ) );
+
+	return str;
+};
 
 
 /**
@@ -23,9 +83,10 @@ function numToHex( number ) {
  * @description Converts a hex representation of an orientation matrix into a standard matrix
  *
  * @param rotationMatrixIndex
+ * @param dataView
  * @return {*}
  ================================================================================================ */
-function getMatrix( rotationMatrixIndex ) {
+const getMatrix = ( rotationMatrixIndex, dataView ) => {
 
 	let matrix = [],
 		offset = 0,
@@ -82,7 +143,7 @@ function getMatrix( rotationMatrixIndex ) {
 	}
 
 	return hasRelevantData ? matrix : false;
-}
+};
 
 
 /**
@@ -91,32 +152,25 @@ function getMatrix( rotationMatrixIndex ) {
  * @description Extracts the EXIF from a qtff video files headers and returns the orientation matrix.
  * Can be easily altered to return other EXIF data
  *
- * @param file
+ * @param buffer
  * @return {Array}
  ================================================================================================ */
-function getEXIFData( file ) {
+const getEXIFData = buffer => {
+
 	const degrees = [],
-		tkhdAddresses = [],
-		mvhdAddresses = [];
+		tkhdAddresses = SampleTableAtom.findAtomOffset( 'tkhd', buffer ),
+		mvhdAddresses = SampleTableAtom.findAtomOffset( 'mvhd', buffer );
 
-	window.dataView = new DataView( file );
+	inspectMovieAtom( buffer );
 
-	const int32 = new Int32Array( file );
+	const dataView = new DataView( buffer );
 
-	// FIND THE ADDRESS LOCATION OF tkhd (track atom header) AND mvhd (movie atom header) THERE CAN BE MULTIPLE tkhd IN ONE FILE SO WE'VE TO CHECK EACH ONE
-	int32.forEach( ( element, index ) => {
-
-		// 0x746b6864 === tkhd IN HEX
-		if ( element === 0x746b6864 ) tkhdAddresses.push( index );
-
-		// 0x6d766864 === mvhd IN HEX
-		if ( element === 0x6d766864 ) mvhdAddresses.push( index );
-	} );
-
-	mvhdAddresses.forEach( function( address ) {
+	mvhdAddresses.forEach( address => {
 
 		// HEADER METADATA
-		const version = address + 4,
+		let type = address - 4,
+			atomSize = type - 4,
+			version = address + 4,
 			flags = version + 1,
 			creationTime = flags + 3,
 			modificationTime = creationTime + 4,
@@ -128,15 +182,17 @@ function getEXIFData( file ) {
 			rotationMatrix = reserved + 10;
 
 		// GET THE ROTATION MATRIX BASED IN ITS INDEX IN THE MOVIE HEADER
-		const parsedMatrix = getMatrix( rotationMatrix );
+		const parsedMatrix = getMatrix( rotationMatrix, dataView );
 
-		parsedMatrix ? degrees.push( getMatrix( rotationMatrix ) ) : null;
+		parsedMatrix ? degrees.push( getMatrix( rotationMatrix, dataView ) ) : null;
 	} );
 
-	tkhdAddresses.forEach( function( address ) {
+	tkhdAddresses.forEach( address => {
 
 		// HEADER METADATA
-		let version = address + 4,
+		let type = address - 4,
+			atomSize = type - 4,
+			version = address + 4,
 			flags = version + 1,
 			creationTime = flags + 3,
 			modificationTime = creationTime + 4,
@@ -151,12 +207,68 @@ function getEXIFData( file ) {
 			rotationMatrix = reserved3 + 2;
 
 		// GET THE ROTATION MATRIX BASED IN ITS INDEX IN THE TRACK HEADER
-		let parsedMatrix = getMatrix( rotationMatrix );
+		let parsedMatrix = getMatrix( rotationMatrix, dataView );
 
-		parsedMatrix ? degrees.push( getMatrix( rotationMatrix ) ) : null;
+		parsedMatrix ? degrees.push( getMatrix( rotationMatrix, dataView ) ) : null;
 	} );
 
-	return degrees;
-}
+	return degrees
+};
+
+
+/**
+ *
+ * @function inspectMovieAtom
+ *
+ * @description
+ *
+ * @param {ArrayBuffer} buffer
+ * @return {Object}
+ ================================================================================================ */
+const inspectMovieAtom = buffer => {
+
+	const movieAtomAddress = SampleTableAtom.findAtomOffset( 'moov', buffer );
+
+
+	// ---------------------------------------------------------------------------------------------
+	movieAtomAddress.forEach( address => {
+
+		const movieData = SampleTableAtom.getAtomData( address, buffer );
+
+		const trackAddress = SampleTableAtom.findAtomOffset( 'trak', movieData.atom );
+
+		trackAddress.forEach( address => {
+
+			let Track = new TrackAtom( 'trak', movieData.atom, address ),
+				handlerReferenceData = Track.handlerReferenceAtom,
+				trackType = handlerReferenceData.componentSubType;
+
+			if ( trackType === 'vide' ) {
+
+				const SampleTable = new SampleTableAtom( 'stbl', Track.dataView.buffer ),
+					chunkOffsetData = SampleTable.chunkOffsetAtom,
+					sampleSizeData = SampleTable.sampleChunkSizeAtom,
+					sampleToChunkData = SampleTable.sampleToChunkAtom,
+					sampleDescriptionData = SampleTable.sampleDescriptionAtom;
+
+				const chunkOffsets = chunkOffsetData.chunkOffsetTable,
+					sampleSizes = sampleSizeData.sampleSizeTable,
+					chunkSamlpes = sampleToChunkData.sampleToChunkTable;
+
+				// GO BACK THROUGH ARRAY OF CHUNK OFFSETS
+				chunkOffsets.reverse().forEach( chunkOffset => {
+
+					// FIND SAMPLES FOR CHUNK OFFSET ADDRESS
+
+
+				} );
+
+				console.log( "CHUNK / SAMPLE DATA FOR: " + trackType, handlerReferenceData );
+
+				console.log( "SampleTable", { chunkOffsetData, sampleSizeData, sampleToChunkData, sampleDescriptionData, Track } );
+			}
+		} );
+	} );
+};
 
 export { getEXIFData };

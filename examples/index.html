@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+	<input type="file" id="input" multiple>
+</body>
+
+<script type="module" lang="js">
+	
+	import { getEXIFData } from "../exif-reader.js";
+
+	const handleFile = function() {
+		
+		const file = this.files[ 0 ];
+
+		let fileReader = new FileReader();
+
+		fileReader.onload = function ( e ) {
+			
+			let orientationMatrix = getEXIFData( e.target.result );
+		};
+
+		fileReader.readAsArrayBuffer( file );
+	};
+
+	const inputElement = document.getElementById("input");
+	
+	inputElement.addEventListener( "change", handleFile, false );
+</script>
+
+</html>
