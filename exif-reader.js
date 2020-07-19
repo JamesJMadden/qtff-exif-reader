@@ -2,7 +2,7 @@
 
 import SampleTableAtom from './lib/sample-table.js';
 import TrackAtom from './lib/track.js';
-import { numToHex } from './lib/utils.js';
+import { getMatrix } from './lib/utils.js';
 
 // DataView.prototype.setUint24 = function(pos, val) {
 // 	this.setUint16( pos, val >> 8 );
@@ -20,75 +20,6 @@ DataView.prototype.getInt24 = function(pos) {
 
 DataView.prototype.getInt48 = function(pos) {
 	return (this.getInt32(pos) << 16) + this.getInt16(pos + 4);
-};
-
-
-/**
- * @function getMatrix
- *
- * @description Converts a hex representation of an orientation matrix into a standard matrix
- *
- * @param rotationMatrixIndex
- * @param dataView
- * @return {*}
- ================================================================================================ */
-const getMatrix = ( rotationMatrixIndex, dataView ) => {
-
-	let matrix = [],
-		offset = 0,
-		hasRelevantData;
-
-
-	// ADD EACH 32 BIT HEX STRING (0xFFFF0000) TO MATRIX
-	// ---------------------------------------------------------------------------------------------
-	for ( let x = 0; x < 3; x ++ ) {
-
-		let columns = [];
-
-		for ( let y = 0; y < 3; y ++ ) {
-
-			// MATCHES EVERY 4 OR 6 CHARACTERS OF HEX DEPENDING ON WHICH ROW IS BEING PARSED
-			let regex = ( ( y + 1 ) % 3 ) ? /.{1,4}/g : /.{1,6}/g,
-				hex16, hex32 = numToHex( dataView.getInt32( rotationMatrixIndex + ( offset * 4 ) ) );
-
-			// CONVERT TO USABLE HEX
-			hex32 = hex32.split( '' ).reverse().join( '' );
-
-			// PULL OUT IMPORTANT PART OF HEX CODE
-			hex16 = hex32.match( regex )[1];
-
-			if ( hex16 ) {
-
-				// REVERSE THE 16BIT HEX STRING
-				hex16 = hex16.split( '' ).reverse().join( '' );
-
-				// CONVERT THE HEX EQUIVALENT INTEGER TO RADIANS AND THEN TO DEGREES
-				let hexInRadians = Math.asin( 			// CONVERTS AN INTEGER TO RADIANS (eg 1 = 90 deg )
-					parseInt( hex16, 16 )		// CONVERTS THE HEX STRING TO A 16 REPRESENTATION OF THAT HEX ( parseInt( 'FF', 16 ) = 255 )
-					/
-					( 1 << 16 )							// EASY WAY TO GET THE VALUE OF 2 TO THE POWER OF 16 (65536)
-				);
-
-				// DEGREES = r * 180 / PI
-				columns[ y ] = Math.abs( Math.round( hexInRadians * 180 / Math.PI ) );
-
-				if ( columns[ y ] !== 0 ) hasRelevantData = true;
-
-				// CONVERT THE HEX EQUIVALENT INTEGER TO RADIANS AND THEN TO DEGREES
-			} else {
-
-				hex32 = hex32.split( '' ).reverse().join( '' );
-
-				columns[ y ] = Math.abs( Math.round( Math.asin( parseInt( hex32.match( regex, 16 )[0] ) / ( 1 << 16 ) ) * 180 / Math.PI ) );
-			}
-
-			offset += 1
-		}
-
-		matrix[x] = columns;
-	}
-
-	return hasRelevantData ? matrix : false;
 };
 
 
@@ -158,6 +89,8 @@ const getEXIFData = buffer => {
 		parsedMatrix ? degrees.push( getMatrix( rotationMatrix, dataView ) ) : null;
 	} );
 
+	console.log( "AOWDINAD degrees ", degrees );
+
 	return degrees
 };
 
@@ -188,6 +121,10 @@ const inspectMovieAtom = buffer => {
 			let Track = new TrackAtom( 'trak', movieData.atom, address ),
 				handlerReferenceData = Track.handlerReferenceAtom,
 				trackType = handlerReferenceData.componentSubType;
+
+			const trackHeaderAtom = Track.trackHeaderAtom;
+
+			console.log( "AWDOINAWD", trackHeaderAtom );
 
 			if ( trackType === 'vide' ) {
 
